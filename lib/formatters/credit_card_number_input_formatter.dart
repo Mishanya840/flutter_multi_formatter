@@ -42,10 +42,14 @@ class CardSystem {
 class CreditCardNumberInputFormatter extends TextInputFormatter {
   final ValueChanged<CardSystemData> onCardSystemSelected;
   final bool useSeparators;
+  final String defaultMask;
 
   CardSystemData _cardSystemData;
   CreditCardNumberInputFormatter(
-      {this.onCardSystemSelected, this.useSeparators = true});
+      {this.onCardSystemSelected,
+    this.useSeparators = true,
+    this.defaultMask,
+  });
 
   @override
   TextEditingValue formatEditUpdate(
@@ -58,7 +62,7 @@ class CreditCardNumberInputFormatter extends TextInputFormatter {
       return newValue;
     }
     var onlyNumbers = toNumericString(newValue.text);
-    String maskedValue = _applyMask(onlyNumbers);
+    String maskedValue = _applyMask(onlyNumbers, defaultMask);
     if (maskedValue.length == oldValue.text.length) {
       return oldValue;
     }
@@ -82,7 +86,7 @@ class CreditCardNumberInputFormatter extends TextInputFormatter {
     }
   }
 
-  String _applyMask(String numericString) {
+  String _applyMask(String numericString, [String defaultMask]) {
     if (numericString.isEmpty) {
       _updateCardSystemData(null);
     } else {
@@ -94,6 +98,8 @@ class CreditCardNumberInputFormatter extends TextInputFormatter {
     }
     if (_cardSystemData != null) {
       return _formatByMask(numericString, _cardSystemData.numberMask);
+    }else if (defaultMask != null) {
+      return _formatByMask(numericString, defaultMask);
     }
     return numericString;
   }
