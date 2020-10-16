@@ -37,6 +37,7 @@ class CardSystem {
   static const String DISCOVER = 'Discover';
   static const String MAESTRO = 'Maestro';
   static const String AMERICAN_EXPRESS = 'Amex';
+  static const String MIR= 'Mir';
 }
 
 class CreditCardNumberInputFormatter extends TextInputFormatter {
@@ -285,6 +286,12 @@ class _CardSystemDatas {
       'systemCode': '67',
       'numberMask': '00000000 0000000000',
       'numDigits': 18,
-    },
-  ];
+   },
+   {
+      'system': CardSystem.MIR,
+      'systemCode': '2',
+      'numberMask': '0000 0000 0000 0000',
+      'numDigits': 16,
+   },
+];
 }
